@@ -14,7 +14,7 @@ public class main {
 
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
         int port = 10000;
-        final ServerSocket serverSocket = new ServerSocket(port); // Creating the server on port 8080
+        final ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("server is listing on " + port);
 
 
