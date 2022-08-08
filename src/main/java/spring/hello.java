@@ -21,13 +21,14 @@ public class hello {
     WebClient webClient;
 
     @GetMapping("/")
-    public Resp index() throws URISyntaxException, IOException, InterruptedException {
+    public String index() throws URISyntaxException, IOException, InterruptedException {
         Mono<String> result = webClient.get().uri("https://api.coindesk.com/v1/bpi/currentprice.json")
                 .retrieve()
                 .bodyToMono(String.class);
         String response = result.block();
-        Resp resp = new Resp("success");
-        return resp;
+//        Resp resp = new Resp("success");
+//        return resp;
+        return response;
     }
 
 }
