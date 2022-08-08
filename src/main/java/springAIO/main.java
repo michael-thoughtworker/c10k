@@ -1,4 +1,4 @@
-package spring;
+package springAIO;
 
 
 import org.springframework.boot.SpringApplication;
