@@ -12,6 +12,7 @@ import java.net.http.HttpResponse;
 
 public class main {
 
+    static  HttpClient client = HttpClient.newHttpClient();
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
         int port = 10000;
         final ServerSocket serverSocket = new ServerSocket(port);

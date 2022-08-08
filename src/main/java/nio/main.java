@@ -14,13 +14,14 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class main {
 
-
+    static  HttpClient client = HttpClient.newHttpClient();
     private static final String TEAPOT_HTTP_RESP_STR =
             "HTTP/1.0 200 OK\r\n" +
                     "Content-Length: 19\r\n" +
@@ -30,7 +31,7 @@ public class main {
     private static final byte[] TEAPOT_HTTP_RESP_BYTES = TEAPOT_HTTP_RESP_STR.getBytes(StandardCharsets.UTF_8);
 
     private static final String HOSTNAME = "0.0.0.0";
-    private static final int HTTP_PORT = 8080;
+    private static final int HTTP_PORT = 10001;
     private static final Logger LOGGER = Logger.getLogger("test server");
 
     public static void main(String[] args) throws IOException {
@@ -133,32 +134,40 @@ public class main {
             var method = httpMessageParser.getMethod();
             var url = httpMessageParser.getUrl();
 
-//            LOGGER.info("Got request from " + remoteAddress + ". Method: " + method + ", url: " + url);
             httpMessageParser.clearState(); // do not forget to clear state if message was fully read
-
-            var client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(1)).build();
 
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://deelay.me/500/https://testaad.free.beeceptor.com/my/api/path"))
+                    .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
                     .GET()
                     .build();
-//            HttpResponse<String> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             CompletableFuture< HttpResponse<String>> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
 
-
-            var respByteBuf = ByteBuffer.wrap(TEAPOT_HTTP_RESP_BYTES);
-            int remaining = respByteBuf.remaining();
-            int write = socketChannel.write(respByteBuf);
-            if (write < remaining) {
-                channelAttachment.setRespByteBuffer(respByteBuf);
-                // register also for WRITE events
-                // we will write remaining bytes when socket will be ready for writing
-                selectionKey.interestOpsOr(SelectionKey.OP_WRITE);
-            } else {
+            response.supplyAsync(() -> {
+                try {
+                    var respByteBuf = ByteBuffer.wrap(TEAPOT_HTTP_RESP_BYTES);
+                    int remaining = respByteBuf.remaining();
+                    int write = socketChannel.write(respByteBuf);
+                    if (write < remaining) {
+                        channelAttachment.setRespByteBuffer(respByteBuf);
+                        // register also for WRITE events
+                        // we will write remaining bytes when socket will be ready for writing
+                        selectionKey.interestOpsOr(SelectionKey.OP_WRITE);
+                    } else {
 //                LOGGER.info("Teapot http response has been sent to " + remoteAddress);
-            }
+                    }
+                } catch (Exception e) {
+                   e.printStackTrace();
+                }
+                return "Rajeev";
+            }).thenApply(name -> {
+                return "Hello " + name;
+            }).thenApply(greeting -> {
+                return greeting + ", Welcome to the CalliCoder Blog";
+            });
+
+
 
         } catch (Exception e) {
 //            LOGGER.log(Level.SEVERE, "Error in `handleRead`", e);
