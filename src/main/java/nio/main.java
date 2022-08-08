@@ -31,7 +31,7 @@ public class main {
     private static final byte[] TEAPOT_HTTP_RESP_BYTES = TEAPOT_HTTP_RESP_STR.getBytes(StandardCharsets.UTF_8);
 
     private static final String HOSTNAME = "0.0.0.0";
-    private static final int HTTP_PORT = 10001;
+    private static final int HTTP_PORT = 10000;
     private static final Logger LOGGER = Logger.getLogger("test server");
 
     public static void main(String[] args) throws IOException {
