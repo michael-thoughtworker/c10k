@@ -15,15 +15,13 @@ import java.util.concurrent.Executors;
 public class main {
 
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
-        int port = 8080;
-        final ServerSocket serverSocket = new ServerSocket(8080);
+        int port = 10000;
+        final ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("server is listing on " + port);
-
 
         final ExecutorService executorService = Executors.newFixedThreadPool(200);
         while (true) {
             final Socket socket = serverSocket.accept(); // Blocking until someone connects
-
             executorService.submit(() -> {
                 try {
                     handle(socket);
@@ -52,7 +50,7 @@ public class main {
 
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://deelay.me/500/https://testaad.free.beeceptor.com/my/api/path"))
+                .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
