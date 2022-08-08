@@ -17,10 +17,8 @@ public class main {
         final ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("server is listing on " + port);
 
-
         while (true) {
             final Socket socket = serverSocket.accept(); // Blocking until someone connects
-
 
             new Thread(() -> {
                 try {
@@ -29,17 +27,12 @@ public class main {
                     e.printStackTrace();
                 }
             }).start();
-
-
         }
     }
 
     private static void handle(final Socket socket) throws IOException, InterruptedException, URISyntaxException {
-
-
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
 
         String s;
         while ((s = in.readLine()) != null) {
@@ -49,16 +42,8 @@ public class main {
         }
 
         var client = HttpClient.newHttpClient();
-
-        int sum =0;
-        for(int i = 1; i <= 999999; i++) {
-
-            sum += 1;
-        }
-
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://deelay.me/500/https://testaad.free.beeceptor.com/my/api/path"))
+                .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -69,7 +54,6 @@ public class main {
         out.write("Content-Type: application/json\r\n");
         out.write("\r\n");
         out.write("{status: \"success\"}");
-
 
         out.close();
         in.close();

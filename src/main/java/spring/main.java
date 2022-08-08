@@ -11,12 +11,6 @@ import reactor.core.publisher.Mono;
 public class main {
 
     public static void main(String[] args) {
-        WebClient webClient = WebClient.create("https://deelay.me/500/");
-        Mono<String> result = webClient.get()
-                .retrieve()
-                .bodyToMono(String.class);
-        String response = result.block();
-        System.out.println(response);
         SpringApplication.run(main.class, args);
     }
 

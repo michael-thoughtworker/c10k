@@ -24,8 +24,8 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 
 public class hello {
 
-@Autowired
-WebClient webClient;
+    @Autowired
+    WebClient webClient;
 
     @GetMapping("/")
     public Resp index() throws URISyntaxException, IOException, InterruptedException {
@@ -50,3 +50,16 @@ class Resp{
         this.result = result;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
