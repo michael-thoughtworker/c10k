@@ -23,6 +23,7 @@ import io.netty.util.CharsetUtil;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
 
 public class CustomHttpServerHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -55,7 +56,7 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler<Object>
                     .uri(new URI("https://deelay.me/500/https://testaad.free.beeceptor.com/my/api/path"))
                     .GET()
                     .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            CompletableFuture< HttpResponse<String>> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e){
             e.printStackTrace();
         }
