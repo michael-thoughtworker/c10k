@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 public class main {
 
+    static  HttpClient client = HttpClient.newHttpClient();
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
         int port = 10000;
         final ServerSocket serverSocket = new ServerSocket(port);
@@ -45,9 +46,6 @@ public class main {
                 break;
             }
         }
-
-        var client = HttpClient.newHttpClient();
-
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
