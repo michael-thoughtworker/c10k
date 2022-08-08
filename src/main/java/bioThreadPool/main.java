@@ -20,7 +20,7 @@ public class main {
         System.out.println("server is listing on " + port);
 
 
-        final ExecutorService executorService = Executors.newFixedThreadPool(20);
+        final ExecutorService executorService = Executors.newFixedThreadPool(200);
         while (true) {
             final Socket socket = serverSocket.accept(); // Blocking until someone connects
 

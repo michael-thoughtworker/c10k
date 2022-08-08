@@ -6,7 +6,7 @@ import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 
 function c10k_get( debug) {
-    var url = "http://localhost:10001";
+    var url = "http://localhost:10000";
     var res = http.get(url);
     if (typeof debug !== 'undefined')
         console.log("init_login: status=" + String(res.status) + "  Body=" + res.body);
