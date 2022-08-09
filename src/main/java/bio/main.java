@@ -35,7 +35,6 @@ public class main {
             }
         }
 
-        var client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
                 .GET()
