@@ -26,7 +26,7 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class CustomHttpServerHandler extends SimpleChannelInboundHandler<Object> {
-
+    static HttpClient client = HttpClient.newHttpClient();
     private HttpRequest request;
     StringBuilder responseData = new StringBuilder();
 
@@ -51,9 +51,9 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler<Object>
         responseData.append(RequestUtils.evaluateDecoderResult(request));
 
         try {
-            var client = HttpClient.newHttpClient();
+
             java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
-                    .uri(new URI("https://deelay.me/500/https://testaad.free.beeceptor.com/my/api/path"))
+                    .uri(new URI("https://api.coindesk.com/v1/bpi/currentprice.json"))
                     .GET()
                     .build();
             CompletableFuture< HttpResponse<String>> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
